@@ -1,5 +1,5 @@
 # Build in SPARK_HOME, set UID=9999
-ARG java_image_tag=8u332-slim-buster
+ARG java_image_tag=11.0.15-slim-buster
 
 FROM openjdk:${java_image_tag}
 ARG DEBIAN_FRONTEND=noninteractive
@@ -81,4 +81,4 @@ USER ${spark_uid}
 # python install_s3_jars.py
 # ln -s $PWD/executor/dockerbuild $SPARK_HOME/dockerbuild
 # cd $SPARK_HOME
-# docker build -t pyspark-executor:latest -f dockerbuild/pyspark-executor.Dockerfile .
+# docker build -t wh1isper/pyspark-executor:latest -f dockerbuild/pyspark-executor.Dockerfile .
