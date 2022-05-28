@@ -6,18 +6,17 @@ RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib n
     && echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free" >> /etc/apt/sources.list \
     && echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free" >> /etc/apt/sources.list
 
-RUN apt-get -y update && apt-get -y upgrade && apt-get install -y curl
-RUN apt-get install -y build-essential default-jdk
+RUN apt-get -y update && apt-get -y upgrade && apt-get install -y curl default-jdk
 
 # 清除缓存
-RUN rm -rf /var/lib/apt/lists/*# 修改系统时区
+RUN rm -rf /var/lib/apt/lists/* &&  rm -rf /root/.cache && rm -rf /var/cache/apt/*
 RUN rm -rf /etc/localtime && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 RUN echo "[global]" > /etc/pip.conf && \
     echo "timeout = 600" >> /etc/pip.conf && \
     echo "index-url = https://mirrors.bfsu.edu.cn/pypi/web/simple" >> /etc/pip.conf
 RUN python3 -m pip install --upgrade pip
-RUN pip3 install 'pyspark<3.3' grpcio protobuf numpy pandas
+RUN pip3 install 'pyspark<3.3' grpcio protobuf numpy pandas --no-cache-dir
 
 # install s3 jars
 WORKDIR /tmp/pyspark_prepare
